@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>beididp</id>
+    <name>Belgian eID IDP Integration</name>
+    <description>Allows users to authenticate with their Belgian eID card, using e-Contract.be's OpenID Identity provider.</description>
+    <licence>AGPL</licence>
+    <author>Bert Maerten</author>
+    <version>0.0.1</version>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8" />
+    </dependencies>
+    <namespace>Beididp</namespace>
+</info>
