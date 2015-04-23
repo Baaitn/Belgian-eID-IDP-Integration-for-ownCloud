@@ -13,8 +13,9 @@ OC.L10N.register(
         "BeID Identity": "eID Identiteit",
         "Operations": "",
         "Add a BeID identity": "eID toevoegen",
-        "Save": "Opslaan",
-        "Delete": "Verwijderen"
+        "Delete": "Verwijderen",
+        "eID successfully removed": "eID succesvol verwijderd",
+        "Failed to remove eID": "Kon eID niet verwijderen"
     },
     "nplurals=2; plural=(n != 1);"
 );

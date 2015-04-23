@@ -1,9 +1,9 @@
 <?php
-/* get, add and set identities */
+/* everything to connect eID identities to an owncloud account */
 //session_start();
-//require 'templates/openid.php';
+//require 'openid.php';
 //$openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain goes here */
-//if (!$openid->mode) {
+//if (!$openid->mode) { /* redirect to the idp after clicking on the button */
 //    if (isset($_POST['submit'])) {
 //        $openid->identity = OCP\Config::getAppValue('beididp', 'beididp_idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint goes here */
 //        /** use one of these as endpoint for $openid->identity to use eID with or without pincode
@@ -30,25 +30,27 @@
 //            'eid/photo',
 //            'eid/cert/auth',
 //        );
-//        header('Location: ' . $openid->authUrl());
+//        /* debug: add identities without "having to" redirect or even own an eid for that matter */
+////        $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'test', array()));
+////        for ($index = 0; $index < 20; $index++) {
+////            $identities[] = 'http://xxx.yyy.zzz/eid?' . $index;
+////        }
+////        OCP\Config::setUserValue(OCP\User::getUser(), 'beididp', 'test', json_encode($identities));
+//        header('Location: ' . $openid->authUrl()); /* redirect to the idp */
 //    }
-//} else {
+//} else { /* get the user and his existing identities (or an empty array if there are none), add the new identiy to the array and save the array */
 //    $openid->validate();
-//
-//    //$attributes = $openid->getAttributes();
-//    //$encodedPhoto = $attributes['eid/photo'];
-//    //$photo = base64url_decode($encodedPhoto);
-//    //$_SESSION['photo'] = $photo;
-//    //echo '<img src="photo.php"/>';
-//    //echo '<br/>';
-//    //echo ($openid->__get("identity")); /* debug: show identity */
-//    //echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show requested attributes */
-//    //echo 'User ' . ($openid->validate() ? $openid->identity . ' has ' : 'has not ') . 'logged in.';
-//    //echo 'Validate ' . ($openid->validate() ? $openid->identity . ' was succesfull ' : 'has failed ');
-//
-//    /* get the user and his identities or an empty array, add the identiy to the array, save the array */
+////    echo 'Validating ' . ($openid->validate() ? $openid->identity . ' was succesfull ' : 'has failed ') . '!';
+////    $attributes = $openid->getAttributes();
+////    $encodedPhoto = $attributes['eid/photo'];
+////    $photo = base64url_decode($encodedPhoto);
+////    $_SESSION['photo'] = $photo;
+////    echo '<img src="photo.php"/>';
+////    echo '<br/>';
+////    echo ($openid->__get("identity")); /* debug: show identity */
+////    echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show requested attributes */
 //    $user = OCP\User::getUser(); /* deprecated, use \OC::$server->getUserSession()->getUser()->getUID() instead */
-//    $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', null));
+//    $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
 //    $identities[] = $openid->__get("identity");
 //    OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
 //}
@@ -57,7 +59,7 @@
 //    $plainText = base64_decode($base64);
 //    return ($plainText);
 //}
-/*  */
+/* everything else */
 OCP\User::checkLoggedIn();
 script('beididp', 'settings.personal');
 $template = new OCP\Template('beididp', 'settings.personal');

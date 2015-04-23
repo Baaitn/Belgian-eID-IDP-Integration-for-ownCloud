@@ -22,7 +22,7 @@
             //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg'); /* OC.msg.startSaving(selector) & OC.msg.startAction(selector, message) in core/js/js.js*/
             //$.ajax({
             //    type: 'POST',
-            //    url: OC.filePath('beididp','ajax','removebeid.php'),
+            //    url: OC.filePath('beididp','ajax','remove.eid.php'),
             //    data: {identity: identity},
             //    success: function (data, textStatus, jqXHR) {
             //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', data); /* OC.msg.finishedSaving(selector, data) & OC.msg.finishedAction(selector, data)  in core/js/js.js*/
@@ -35,7 +35,7 @@
 
             $('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
-                OC.filePath('beididp', 'ajax', 'removebeid.php'),
+                OC.filePath('beididp', 'ajax', 'remove.eid.php'),
                 {identity: identity},
                 function (result) {
                     if (result.status === 'success') {
@@ -58,7 +58,7 @@
         //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
         //    $.ajax({
         //        type: 'POST',
-        //        url: OC.filePath('beididp','ajax','removebeid.php'),
+        //        url: OC.filePath('beididp','ajax','remove.eid.php'),
         //        data: {identity: identity},
         //        success: function (data, textStatus, jqXHR) {
         //            //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
@@ -71,7 +71,7 @@
         //
         //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
         //    $.post(
-        //        OC.filePath('beididp', 'ajax', 'removebeid.php'),
+        //        OC.filePath('beididp', 'ajax', 'remove.eid.php'),
         //        {identity: identity},
         //        function (data) {
         //            if (data.status === 'success') {
@@ -121,7 +121,7 @@
         //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
         //    $.ajax({
         //        type: 'POST',
-        //        url: OC.filePath('beididp','ajax','removebeid.php'),
+        //        url: OC.filePath('beididp','ajax','remove.eid.php'),
         //        data: {identities: identities},
         //        success: function (data, textStatus, jqXHR) {
         //            //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
@@ -134,7 +134,7 @@
         //
         //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
         //    $.post(
-        //        OC.filePath('beididp', 'ajax', 'removebeid.php'),
+        //        OC.filePath('beididp', 'ajax', 'remove.eid.php'),
         //        identities,
         //        function (data) {
         //            if (data.status === 'success') {
@@ -151,7 +151,7 @@
 
 //        //OC.msg.startSaving('#form .msg');
 //        $.ajax({
-//            url: OC.filePath('beididp','ajax','removeBeID.php'),
+//            url: OC.filePath('beididp','ajax','remove.eid.php'),
 //            dataType: 'json',
 //            contentType: 'application/json; charset=UTF-8',
 //            type: 'post',
@@ -183,7 +183,7 @@
 //        });
 
 //        $.post(
-//            OC.filePath('beididp','ajax','removeBeID.php'), 
+//            OC.filePath('beididp','ajax','remove.eid.php'), 
 //            post, 
 //            function (data) {
 //                OC.msg.finishedSaving('#form .msg', data);
@@ -191,7 +191,7 @@
 //        );
 
 //        $.post(
-//            OC.filePath('beididp','ajax','removeBeID.php'),
+//            OC.filePath('beididp','ajax','remove.eid.php'),
 //            {identities: identities},
 //            function (result) {
 //                if (result.status != 'success') {
@@ -203,7 +203,7 @@
 //        );
 
 //        $.post(
-//            OC.filePath('beididp','ajax','removeBeID.php'), 
+//            OC.filePath('beididp','ajax','remove.eid.php'), 
 //            {ids: identities}, 
 //            function (data) {
 //                if (data.status != 'success') {
@@ -214,7 +214,7 @@
 //        }, 'json');
 
 //        $.post(
-//            OC.filePath('beididp','ajax','removeBeID.php'), 
+//            OC.filePath('beididp','ajax','remove.eid.php'), 
 //            post, 
 //            function (data) {
 //                if (data.status == "success") {
@@ -224,16 +224,16 @@
 //                }
 //        });
 
-//        $.post(OC.filePath('beididp','ajax','removeBeID.php'), post, function (data) {
+//        $.post(OC.filePath('beididp','ajax','remove.eid.php'), post, function (data) {
 //            $('#form .msg').text('Finished: ' + data);
 //            alert('Finished: ' + data);
 //        }); 
 
-//        $.post(OC.filePath('beididp', 'ajax', 'removeBeID.php'), data, function (result) {
+//        $.post(OC.filePath('beididp', 'ajax', 'remove.eid.php'), data, function (result) {
 //            OC.msg.finishedSaving('#form .msg', result);
 //        });
 
-//        $.post(OC.filePath('beididp', 'ajax', 'removeBeID.php', function () {
+//        $.post(OC.filePath('beididp', 'ajax', 'remove.eid.php', function () {
 //            alert("success");
 //        })
 //            .done(function () {
@@ -249,7 +249,7 @@
 
 //        OC.msg.startSaving('#form .msg');
 //        var post = $('#form').serialize();
-//        $.post(OC.filePath('beididp', 'ajax', 'addBeID.php'), post, function (result) {
+//        $.post(OC.filePath('beididp', 'ajax', 'add.eid.php'), post, function (result) {
 //            OC.msg.finishedSaving('#form .msg', result);
 //        });
 //            

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ownCloud - Belgian eID IDP Integration
  *

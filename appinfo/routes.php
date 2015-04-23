@@ -1,4 +1,4 @@
-l<?php
+<?php
 /**
  * ownCloud - Belgian eID IDP Integration
  *
@@ -18,7 +18,7 @@ l<?php
  * it's instantiated in there
  */
 
-$this->create('beididp_ajax_removebeid', 'ajax/removebeid.php')->actionInclude('beididp/ajax/removebeid.php');
+$this->create('beididp_ajax_remove_eid', 'ajax/remove.eid.php')->actionInclude('beididp/ajax/remove.eid.php');
 
 return [
     'routes' => [

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ownCloud - Belgian eID IDP Integration
  *
@@ -8,7 +9,6 @@
  * @author Bert Maerten <maerten.bert@outlook.com>
  * @copyright Bert Maerten 2015
  */
-
 require_once __DIR__ . '/../../../../3rdparty/autoload.php';
 
 class OC {
