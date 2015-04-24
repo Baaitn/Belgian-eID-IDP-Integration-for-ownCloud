@@ -19,13 +19,13 @@
             var row = $(this).parent().parent();
             var identity = $.trim(row.text());
 
-            //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg'); /* OC.msg.startSaving(selector) & OC.msg.startAction(selector, message) in core/js/js.js*/
+            //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg'); /* OC.msg.startSaving(selector) & OC.msg.startAction(selector, message) in core/js/js.js */
             //$.ajax({
             //    type: 'POST',
             //    url: OC.filePath('beididp','ajax','remove.eid.php'),
             //    data: {identity: identity},
             //    success: function (data, textStatus, jqXHR) {
-            //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', data); /* OC.msg.finishedSaving(selector, data) & OC.msg.finishedAction(selector, data)  in core/js/js.js*/
+            //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', data); /* OC.msg.finishedSaving(selector, data) & OC.msg.finishedAction(selector, data)  in core/js/js.js */
             //        row.remove();
             //    },
             //    error: function (jqXHR, textStatus, errorThrown) {
