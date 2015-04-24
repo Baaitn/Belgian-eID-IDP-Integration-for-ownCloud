@@ -42,13 +42,7 @@
                 'eid/photo',
                 'eid/cert/auth',
             );
-            /* debug: add identities without "having to" redirect or even own an eid for that matter */
-//            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'test', array()));
-//            for ($index = 0; $index < 20; $index++) {
-//                $identities[] = 'http://xxx.yyy.zzz/eid?' . $index;
-//            }
-//            OCP\Config::setUserValue(OCP\User::getUser(), 'beididp', 'test', json_encode($identities));
-            header('Location: ' . $openid->authUrl()); /* redirect to the idp */
+            header('Location: ' . $openid->authUrl());
         }
     } else { /* get the user and his existing identities (or an empty array if there are none), add the new identiy to the array and save the array */
         $openid->validate();
@@ -63,7 +57,10 @@
 //        echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show requested attributes */
         $user = OCP\User::getUser(); /* deprecated, use \OC::$server->getUserSession()->getUser()->getUID() instead */
         $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
-        $identities[] = $openid->__get("identity"); //TODO: add check to see if identities are unique 
+        $identity = $openid->__get("identity");
+        if (!in_array($identity, $identities)) {
+            $identities[] = $identity; //TODO: provide feedback to user: identity added? duplicate identity? ...
+        }
         OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
     }
     function base64url_decode($base64url) {
@@ -81,9 +78,8 @@
         </thead>
         <tbody>
             <?php
-            /* get the user and his identities, display each identity in a table */
-            $user = OCP\User::getUser();
-            $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', null));
+            /* get the identities of a user and display each one in the table */
+            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'test', array()));
 //            $identities = array("eID #1", "eID #2");
 //            $identities = \OCA\beididp\beididp::getIdentities();
 //            for ($i = 0; $i < sizeof($identities); $i++) {
@@ -95,14 +91,14 @@
             foreach ($identities as $identity):?>
                 <tr style="overflow:hidden; white-space:nowrap;">
                     <td><?php p($identity) ?></td>
-                    <td class="remove"><img alt="<?php p($l->t('Delete')); ?>" title="<?php p($l->t('Delete')); ?>" class="svg action" src="<?php print_unescaped(image_path('core', 'actions/delete.svg')); ?>"/></td>
+                    <td class="remove"><img class="svg action" alt="<?php p($l->t('Delete')); ?>" title="<?php p($l->t('Delete')); ?>" src="<?php print_unescaped(image_path('core', 'actions/delete.svg')); ?>"/></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     <br />
-    <form id="form" method="post" action="">
-        <input type="submit" name="submit" value="<?php p($l->t('Add a BeID identity')); ?>" id="submit"></input>
-        <span class="msg" id="output"></span>
+    <form id="form" method="post">
+        <input id="submit" name="submit" type="submit" value="<?php p($l->t('Add eID')); ?>"></input>
+        <span class="msg"></span>
     </form>
 </div>

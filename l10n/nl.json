@@ -9,13 +9,22 @@
         "HTTPS must be activated to prevent cookie/session hijacking.": "HTTPS moet worden geactiveerd om cookie/sessie kaping te voorkomen.",
         "Apply hash function to BeIDIDP identity": "Hashfunctie toepassen op BeIDIDP identiteit",
         "Enable this option to hash the unique National Registry Number (part of the BeidIDP Identity) before storing it in the database.": "Activeer deze optie om het unieke rijksregisternummer (onderdeel van de BeidIDP Identiteit) te hashen voordat u deze opslaat in de database.",
+        "Save": "Opslaan",
+        "Saving...": "Opslaan...",
+        "Settings saved": "Instellingen opgeslagen",
+        "Could not save settings": "Kon instellingen niet opslaan",
+        
         "Belgian eID Identities": "eID Identiteiten",
         "BeID Identity": "eID Identiteit",
-        "Operations": "",
-        "Add a BeID identity": "eID toevoegen",
+        "Operations": "Bewerkingen",
+        "Add eID": "eID toevoegen",
+        "Adding...": "Toevoegen...",
+        "eID added": "eID toegevoegd",
+        "Could not add eID": "Kon eID niet toevoegen",
         "Delete": "Verwijderen",
-        "eID successfully removed": "eID succesvol verwijderd",
-        "Failed to remove eID": "Kon eID niet verwijderen"
+        "Removing...": "Verwijderen...",
+        "eID removed": "eID verwijderd",
+        "Could not remove eID": "Kon eID niet verwijderen"
     },
     "pluralForm": "nplurals=2; plural=(n != 1);"
 }

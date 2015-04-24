@@ -33,7 +33,7 @@
             //    }
             //});
 
-            $('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            $('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'remove.eid.php'),
                 {identity: identity},
@@ -48,43 +48,7 @@
             );
         });
 
-        //V2 - get identity; send identity to server; get identities and remove the recieved one; save identities; remove identity from view
-        //$('#identities').on('click', 'td.remove > img', function () {
-        //    alert('row.remove()');
-        //
-        //    var row = $(this).parent().parent();
-        //    var identity = $.trim(row.text());
-        //
-        //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
-        //    $.ajax({
-        //        type: 'POST',
-        //        url: OC.filePath('beididp','ajax','remove.eid.php'),
-        //        data: {identity: identity},
-        //        success: function (data, textStatus, jqXHR) {
-        //            //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
-        //            row.remove();
-        //        },
-        //        error: function (jqXHR, textStatus, errorThrown) {
-        //            //$('#form .msg').html('error').addClass('error').removeClass('success').show();
-        //        }
-        //    });
-        //
-        //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
-        //    $.post(
-        //        OC.filePath('beididp', 'ajax', 'remove.eid.php'),
-        //        {identity: identity},
-        //        function (data) {
-        //            if (data.status === 'success') {
-        //                //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
-        //                row.remove();
-        //            } else {
-        //                //$('#form .msg').html('error').addClass('error').removeClass('success').show();
-        //            }
-        //        }
-        //    );
-        //});
-
-        //V1 - remove identity from view; send leftover identities to server; save identities
+        // <editor-fold defaultstate="collapsed" desc="V1 - remove identity from view; send leftover identities to server; save identities">
         //$('#identities').on('click', 'td.remove > img', function () {
         //    alert('row.remove()');
         //
@@ -118,7 +82,7 @@
         //    //alert(serialized3);
         //
         //    //send identities to be removed from storage
-        //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
+        //    //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show();
         //    $.ajax({
         //        type: 'POST',
         //        url: OC.filePath('beididp','ajax','remove.eid.php'),
@@ -132,12 +96,12 @@
         //        }
         //    });
         //
-        //    //$('#form .msg').html(t('core', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show();
+        //    //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show();
         //    $.post(
         //        OC.filePath('beididp', 'ajax', 'remove.eid.php'),
         //        identities,
-        //        function (data) {
-        //            if (data.status === 'success') {
+        //        function (result) {
+        //            if (result.status === 'success') {
         //                //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
         //                row.remove();
         //            } else {
@@ -146,16 +110,72 @@
         //        }
         //    );
         //});
-
-        //Other functions
+        // </editor-fold>
+        // <editor-fold defaultstate="collapsed" desc="V2 - get identity; send identity to server; get identities and remove the recieved one; save identities; remove identity from view">
+        //$('#identities').on('click', 'td.remove > img', function () {
+        //    alert('row.remove()');
+        //
+        //    var row = $(this).parent().parent();
+        //    var identity = $.trim(row.text());
+        //
+        //    //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show();
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: OC.filePath('beididp','ajax','remove.eid.php'),
+        //        data: {identity: identity},
+        //        success: function (data, textStatus, jqXHR) {
+        //            //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
+        //            row.remove();
+        //        },
+        //        error: function (jqXHR, textStatus, errorThrown) {
+        //            //$('#form .msg').html('error').addClass('error').removeClass('success').show();
+        //        }
+        //    });
+        //
+        //    //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show();
+        //    $.post(
+        //        OC.filePath('beididp', 'ajax', 'remove.eid.php'),
+        //        {identity: identity},
+        //        function (result) {
+        //            if (result.status === 'success') {
+        //                //$('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show();
+        //                row.remove();
+        //            } else {
+        //                //$('#form .msg').html('error').addClass('error').removeClass('success').show();
+        //            }
+        //        }
+        //    );
+        //});
+        // </editor-fold>
 
         $('#submit').click(function () {
             alert('#submit.click()');
         });
 
-        //$("#form").submit(function (event) {
+        // <editor-fold defaultstate="collapsed" desc="debug: add identities without redirecting to the idp">
+        //$("#form").submit(function (event) { 
         //    event.preventDefault();
+        //
+        //    var count = 1;
+        //
+        //    alert('Adding ' + count + ' additional identities');
+        //
+        //    $('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+        //    $.post(
+        //        OC.filePath('beididp', 'ajax', 'debug.add.eid.php'),
+        //        {count: count},
+        //        function (result) {
+        //            if (result.status === 'success') {
+        //                $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+        //                //FIXME: add identities to table needing to reload the page, note that in production the page will reload due to the redict to and from the idp
+        //                location.reload();
+        //            } else {
+        //                $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+        //            }
+        //        }
+        //    );
         //});
+        // </editor-fold>
 
     });
 

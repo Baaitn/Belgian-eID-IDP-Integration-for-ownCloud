@@ -30,13 +30,7 @@
 //            'eid/photo',
 //            'eid/cert/auth',
 //        );
-//        /* debug: add identities without "having to" redirect or even own an eid for that matter */
-////        $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'test', array()));
-////        for ($index = 0; $index < 20; $index++) {
-////            $identities[] = 'http://xxx.yyy.zzz/eid?' . $index;
-////        }
-////        OCP\Config::setUserValue(OCP\User::getUser(), 'beididp', 'test', json_encode($identities));
-//        header('Location: ' . $openid->authUrl()); /* redirect to the idp */
+//        header('Location: ' . $openid->authUrl());
 //    }
 //} else { /* get the user and his existing identities (or an empty array if there are none), add the new identiy to the array and save the array */
 //    $openid->validate();
@@ -51,7 +45,10 @@
 ////    echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show requested attributes */
 //    $user = OCP\User::getUser(); /* deprecated, use \OC::$server->getUserSession()->getUser()->getUID() instead */
 //    $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
-//    $identities[] = $openid->__get("identity");
+//    $identity = $openid->__get("identity");
+//    if (!in_array($identity, $identities)) {
+//        $identities[] = $identity; //TODO: provide feedback to user: identity added? duplicate identity? ...
+//    }
 //    OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
 //}
 //function base64url_decode($base64url) {
@@ -59,7 +56,8 @@
 //    $plainText = base64_decode($base64);
 //    return ($plainText);
 //}
-/* everything else */
+/*  */
+OCP\JSON::checkAppEnabled('beididp');
 OCP\User::checkLoggedIn();
 script('beididp', 'settings.personal');
 $template = new OCP\Template('beididp', 'settings.personal');
