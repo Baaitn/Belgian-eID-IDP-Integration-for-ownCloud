@@ -2,8 +2,9 @@
 An app for ownCloud that allows users to authenticate with their Belgian eID card using e-Contract.be's OpenID Identity provider.
 
 ## Installation
-Upload this app to **owncloud/apps/**.
-Navigate to the 'Apps' page and choose 'Not enabled'. Then click the 'Enable' button.
+Upload this to **owncloud/apps/** and navigate to the 'Apps' page and choose 'Not enabled'. Then click the 'Enable' button of 'Belgian eID IDP Integration'.
+Don't forget to copy **beididp/templates/login.php** and **beididp/templates/openid.php** to **owncloud/core/templates**.
+Make sure to backup the original **login.php** in case you want to uninstall this app.
 
 ## Publish to App Store
 
