@@ -8,7 +8,7 @@ script('core', ['visitortimezone', 'lostpassword']);
 require 'openid.php';
 $openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain goes here */
 if (!$openid->mode) { 
-    if (isset($_POST['submit'])) { /* redirect to the idp after submitting the form */
+    if (isset($_POST['redirect'])) { /* redirect to the idp after submitting the form */
         $openid->identity = OCP\Config::getAppValue('beididp', 'beididp_idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint goes here */
         /** use one of these as endpoint for $openid->identity to use eID with or without pincode
          * https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident
@@ -51,10 +51,16 @@ if (!$openid->mode) {
         $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
         $identity = $openid->__get("identity");
         if (in_array($identity, $identities)) {
+            //for now, the username and password are the same; it can be changed to the (hashed) identity or some other data returned from the idp, obviously the user will need to have that as password for it to work
             echo "$user has $identity stored in their settings. <br/>";
+            //OC\User\Session::login($user, $user); //Fatal error: Call to a member function emit() on a non-object in /var/www/owncloud/lib/private/user/session.php on line 195
+            //OCP\IUserSession::login($user, $user); //Fatal error: Non-static method OCP\IUserSession::login() cannot be called statically, assuming $this from incompatible context in /var/www/owncloud/core/templates/login.php on line 57
+            //OC::$server->getUserManager()->login($user, $user); //Fatal error: Call to undefined method OC\User\Manager::login() in /var/www/owncloud/core/templates/login.php on line 58
+            OC::$server->getUserSession()->login($user, $user);
+            //Works, still needs a reload of the page though
+            header('Location: ' . $_SERVER['REQUEST_URI']); //TODO: cleanup and replace $user with something better
         }
     }
-    die("halted");
 }
 function base64url_decode($base64url) {
     $base64 = strtr($base64url, '-_', '+/');
@@ -74,13 +80,13 @@ function base64url_decode($base64url) {
         ?>
         <?php if (isset($_['apacheauthfailed']) && ($_['apacheauthfailed'])): ?>
             <div class="warning">
-            <?php p($l->t('Server side authentication failed!')); ?><br>
+                <?php p($l->t('Server side authentication failed!')); ?><br>
                 <small><?php p($l->t('Please contact your administrator.')); ?></small>
             </div>
         <?php endif; ?>
         <?php foreach ($_['messages'] as $message): ?>
             <div class="warning">
-            <?php p($message); ?><br>
+                <?php p($message); ?><br>
             </div>
         <?php endforeach; ?>
         <p id="message" class="hidden">
@@ -100,9 +106,7 @@ function base64url_decode($base64url) {
             <img class="svg" id="password-icon" src="<?php print_unescaped(image_path('', 'actions/password.svg')); ?>" alt=""/>
         </p>
         <?php if (isset($_['invalidpassword']) && ($_['invalidpassword'])): ?>
-            <a id="lost-password" class="warning" href="">
-            <?php p($l->t('Forgot your password? Reset it!')); ?>
-            </a>
+            <a id="lost-password" class="warning" href=""><?php p($l->t('Forgot your password? Reset it!')); ?></a>
         <?php endif; ?>
         <?php if ($_['rememberLoginAllowed'] === true) : ?>
             <input type="checkbox" name="remember_login" value="1" id="remember_login" />
@@ -111,7 +115,8 @@ function base64url_decode($base64url) {
         <input type="hidden" name="timezone-offset" id="timezone-offset"/>
         <input type="hidden" name="timezone" id="timezone"/>
         <input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>" />
-        <input type="submit" name="submit" id="submit" class="login primary" value="<?php p($l->t('Log in')); ?>" disabled="disabled"/>
+        <input type="submit"                 id="submit" class="login primary" value="<?php p($l->t('Log in')); ?>" disabled="disabled"/>
+        <input type="submit" name="redirect" id="submit" class="login primary" value="<?php p($l->t('Log in with eID')); ?>" disabled="disabled"/>
     </fieldset>
 </form>
 <?php if (!empty($_['alt_login'])) { ?>

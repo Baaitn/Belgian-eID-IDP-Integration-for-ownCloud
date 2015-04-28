@@ -12,8 +12,8 @@
 namespace OCA\Beididp\AppInfo;
 
 if (!\OCP\User::isLoggedIn()){
-    \OCP\Util::addScript('beididp', 'homepage');
-//    \OCP\Util::addStyle('beididp', 'homepage');
+    \OCP\Util::addScript('beididp', 'login');
+//    \OCP\Util::addStyle('beididp', 'login');
 }
 
 \OCP\App::registerAdmin('beididp', 'settings.admin');

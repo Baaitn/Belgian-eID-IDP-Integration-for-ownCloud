@@ -49,6 +49,11 @@
 //                }
 //            );
 //        });
+
+        $('input[name="redirect"]').click(function (){
+            $('#user').val('');
+            $('#password').val('');
+        });
         
     });
 

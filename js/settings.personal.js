@@ -33,6 +33,9 @@
             //    }
             //});
 
+            //FIXME: change this back to V1
+            //If it happens that an identity does get added twice, you'll be able to remove just one of them. Added bonus is that there won't be a decync between GUI and DB untill you reload the page.
+
             $('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'remove.eid.php'),

@@ -24,7 +24,10 @@ OC.L10N.register(
         "Delete": "Verwijderen",
         "Removing...": "Verwijderen...",
         "eID removed": "eID verwijderd",
-        "Could not remove eID": "Kon eID niet verwijderen"
+        "Could not remove eID": "Kon eID niet verwijderen",
+        
+        "Log in": "Aanmelden",
+        "Log in with eID": "Aanmelden met eID"
     },
     "nplurals=2; plural=(n != 1);"
 );
