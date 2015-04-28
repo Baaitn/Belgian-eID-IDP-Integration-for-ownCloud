@@ -32,7 +32,7 @@
 //        );
 //        header('Location: ' . $openid->authUrl());
 //    }
-//} else { /* get the user and his existing identities (or an empty array if there are none), add the new identiy to the array and save the array */
+//} else { /* get the user and his existing identities (or an empty array if there are none), add the new identiy to the array then save the array */
 //    $openid->validate();
 ////    $attributes = $openid->getAttributes();
 ////    $encodedPhoto = $attributes['eid/photo'];

@@ -13,10 +13,10 @@
     $(document).ready(function () {
         alert('document.ready()');
 
-        $('input[name*=beididp]').change(eventHandler); //$('input[type=text][name*=beididp]').change(function () { alert('text.change()'); });
-        $('select[name*=beididp]').change(eventHandler); //$('input[type=checkbox][name*=beididp]').change(function () { alert('checkbox.change()'); });
+        $('input[name*=beididp]').change(ChangeEventHandler); //$('input[type=text][name*=beididp]').change(function () { alert('text.change()'); });
+        $('select[name*=beididp]').change(ChangeEventHandler); //$('input[type=checkbox][name*=beididp]').change(function () { alert('checkbox.change()'); });
         
-        function eventHandler(event) {
+        function ChangeEventHandler(event) {
             alert(event.target.type + '.change()');
             
             var url = $('#edit-beididp-idp-url').val();

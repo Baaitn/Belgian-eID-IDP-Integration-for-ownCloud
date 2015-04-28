@@ -19,7 +19,6 @@
 $this->create('beididp_ajax_debug_add_eid', 'ajax/debug.add.eid.php')->actionInclude('beididp/ajax/debug.add.eid.php');
 $this->create('beididp_ajax_remove_eid', 'ajax/remove.eid.php')->actionInclude('beididp/ajax/remove.eid.php');
 $this->create('beididp_ajax_settings_admin', 'ajax/settings.admin.php')->actionInclude('beididp/ajax/settings.admin.php');
-$this->create('beididp_ajax_homepage', 'ajax/homepage.php')->actionInclude('beididp/ajax/homepage.php');
 
 /**
  * Create your routes in here. The name is the lowercase name of the controller

@@ -4,13 +4,11 @@ OCP\JSON::checkAppEnabled('beididp');
 OCP\JSON::checkLoggedIn();
 OCP\JSON::callCheck();
 
-$count = $_POST['count'];
-
 $l = OCP\Util::getL10N('beididp'); //$l=OC_L10N::get('beididp'); //$l = \OC::$server->getL10N('settings');
 $user= OCP\USER::getUser();
 $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
-for ($index = 0; $index < $count; $index++) {
-    $identity = 'http://xxx.yyy.zzz/eid?' . date("ymdHi") . $index;
+for ($index = 0; $index < 1; $index++) {
+    $identity = 'http://xxx.yyy.zzz/eid?' . date("ymd") . 'X' . sprintf("%02d", count($identities)) . 'X'. sprintf("%02d", $index);
     if(!in_array($identity, $identities)){
         $identities[] = $identity;
     }

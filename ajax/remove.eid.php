@@ -4,18 +4,10 @@ OCP\JSON::checkAppEnabled('beididp');
 OCP\JSON::checkLoggedIn();
 OCP\JSON::callCheck();
 
-$identity = $_POST['identity'];
-
 $l = OCP\Util::getL10N('beididp'); //$l=OC_L10N::get('beididp'); //$l = \OC::$server->getL10N('settings');
 $user= OCP\USER::getUser();
-$oldidentities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
-$newidentities = array();
-foreach ($oldidentities as $value) {
-    if($identity !== $value){
-        $newidentities[] = $value;
-    }
-}
-OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($newidentities));
+$identities = $_POST['identities'];
+OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
 
 if(true){
     //OC_JSON::success(array('data' => array( 'message' => $l->t('Success') )));

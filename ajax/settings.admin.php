@@ -9,7 +9,6 @@ $url = $_POST['url'];
 $mail = $_POST['mail'];
 $https = $_POST['https'];
 $hash = $_POST['hash'];
-
 OCP\Config::setAppValue('beididp', 'beididp_idp_url', $url);
 OCP\Config::setAppValue('beididp', 'beididp_no_mail_verify', $mail);
 OCP\Config::setAppValue('beididp', 'beididp_https_required', $https);
