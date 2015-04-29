@@ -11,10 +11,10 @@
 (function ($, OC) {
 
     $(document).ready(function () {
-        alert('document.ready()');
+        //alert('document.ready()');
 
         $('#identities td.remove > img').click(function () {
-            alert('row.remove()');
+            //alert('row.remove()');
            
             //remove identity from view, 
             var row = $(this).parent().parent();
@@ -36,20 +36,6 @@
             //});
 
             //send identities to be removed from storage
-            //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
-            //$.ajax({
-            //    type: 'POST',
-            //    url: OC.filePath('beididp','ajax','remove.eid.php'),
-            //    data: {identities: identities},
-            //    success: function (data, textStatus, jqXHR) {
-            //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
-            //        row.remove();
-            //    },
-            //    error: function (jqXHR, textStatus, errorThrown) {
-            //        $('#form .msg').html('error').addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
-            //    }
-            //});
-
             $('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'remove.eid.php'),
@@ -63,31 +49,43 @@
                     }
                 }
             );
+    
+            //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            //$.ajax({
+            //    type: 'POST',
+            //    url: OC.filePath('beididp','ajax','remove.eid.php'),
+            //    data: {identities: identities},
+            //    success: function (data, textStatus, jqXHR) {
+            //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+            //        row.remove();
+            //    },
+            //    error: function (jqXHR, textStatus, errorThrown) {
+            //        $('#form .msg').html('error').addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+            //    }
+            //});
         });
 
-        //$('#submit').click(function () {
-        //    alert('#submit.click()');
-        //});
+        $('#submit').click(function () {
+            //alert('#submit.click()');
+        });
 
-        //<editor-fold defaultstate="collapsed" desc="debug: add identities without redirecting to the idp">
-        //$("#form").submit(function (event) { 
-        //    event.preventDefault();
-        //
-        //    $('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
-        //    $.post(
-        //        OC.filePath('beididp', 'ajax', 'debug.add.eid.php'),
-        //        function (result) {
-        //            if (result.status === 'success') {
-        //                $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
-        //                //FIXME: add identities to table needing to reload the page, note that in production the page will reload due to the redict to and from the idp
-        //                location.reload();
-        //            } else {
-        //                $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
-        //            }
-        //        }
-        //    );
-        //});
-        //</editor-fold>
+        $("#form").submit(function (event) { 
+            //event.preventDefault();
+            
+            //debug: add identities without redirecting to the idp
+            //$('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            //$.post(
+            //    OC.filePath('beididp', 'ajax', 'debug.add.eid.php'),
+            //    function (result) {
+            //        if (result.status === 'success') {
+            //            $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+            //            location.reload(); //FIXME: add identities to the table without needing to reload the page, note that in production the page will reload due to the redict to and from the idp
+            //        } else {
+            //            $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+            //        }
+            //    }
+            //);
+        });
 
     });
 

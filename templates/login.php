@@ -1,21 +1,23 @@
 <?php /** @var $l OC_L10N */ ?>
+
 <?php
 vendor_script('jsTimezoneDetect/jstz');
 script('core', ['visitortimezone', 'lostpassword']);
+$l2 = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 ?>
 
 <?php
 require 'openid.php';
-$openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain goes here */
+$openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain */
 if (!$openid->mode) { 
     if (isset($_POST['redirect'])) { /* redirect to the idp after submitting the form */
-        $openid->identity = OCP\Config::getAppValue('beididp', 'beididp_idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint goes here */
+        $openid->identity = OCP\Config::getAppValue('beididp', 'beididp_idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint */
         /** use one of these as endpoint for $openid->identity to use eID with or without pincode
          * https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident
          * https://www.e-contract.be/eid-idp/endpoints/openid/auth
          * https://www.e-contract.be/eid-idp/endpoints/openid/ident 
          */
-        $openid->required = array(
+        $openid->required = array( /* array of requested attributes */
             'namePerson',
             'namePerson/first',
             'namePerson/last',
@@ -36,29 +38,23 @@ if (!$openid->mode) {
         );
         header('Location: ' . $openid->authUrl());
     }
-} else { /* loop trough all users and see if the identity can be found; if so, log that user in */
+} else { /* get all users and see which identities they have and if a match with the new identity is found, try to log the user in */
     $openid->validate();
-//    $attributes = $openid->getAttributes();
-//    $encodedPhoto = $attributes['eid/photo'];
-//    $photo = base64url_decode($encodedPhoto);
-//    $_SESSION['photo'] = $photo;
-//    echo '<img src="core/templates/photo.php"/>';
-//    echo '<br/>';
-//    echo ($openid->__get("identity")); /* debug: show identity */
-//    echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show requested attributes */
-    $users = OCP\User::getUsers('', null, null); //getUsers($search, $limit, $offset) /* deprecated in 8.1.0, use method search() of \OCP\IUserManager - \OC::$server->getUserManager() instead */
+    $attributes = $openid->getAttributes();
+    //$encodedPhoto = $attributes['eid/photo'];
+    //$photo = base64url_decode($encodedPhoto);
+    //$_SESSION['photo'] = $photo;
+    //echo '<img src="photo.php"/>';
+    //echo '<br/>';
+    //echo ($openid->__get("identity")); /* debug: show identity */
+    //echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show attributes */
+    $users = OCP\User::getUsers('', null, null); //getUsers($search, $limit, $offset); /* deprecated in 8.1.0, use method search() of \OCP\IUserManager - \OC::$server->getUserManager() instead */
     foreach ($users as $user) {
         $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
         $identity = $openid->__get("identity");
         if (in_array($identity, $identities)) {
-            //for now, the username and password are the same; it can be changed to the (hashed) identity or some other data returned from the idp, obviously the user will need to have that as password for it to work
-            echo "$user has $identity stored in their settings. <br/>";
-            //OC\User\Session::login($user, $user); //Fatal error: Call to a member function emit() on a non-object in /var/www/owncloud/lib/private/user/session.php on line 195
-            //OCP\IUserSession::login($user, $user); //Fatal error: Non-static method OCP\IUserSession::login() cannot be called statically, assuming $this from incompatible context in /var/www/owncloud/core/templates/login.php on line 57
-            //OC::$server->getUserManager()->login($user, $user); //Fatal error: Call to undefined method OC\User\Manager::login() in /var/www/owncloud/core/templates/login.php on line 58
-            OC::$server->getUserSession()->login($user, $user);
-            //Works, still needs a reload of the page though
-            header('Location: ' . $_SERVER['REQUEST_URI']); //TODO: cleanup and replace $user with something better
+            OC::$server->getUserSession()->login($user, $attributes['eid/cert/auth']);  //TODO: provide feedback to user: match found? password correct? ...
+            header('Location: ' . $_SERVER['REQUEST_URI']);
         }
     }
 }
@@ -67,7 +63,6 @@ function base64url_decode($base64url) {
     $plainText = base64_decode($base64);
     return ($plainText);
 }
-
 ?>
 
 <!--[if IE 8]><style>input[type="checkbox"]{padding:0;}</style><![endif]-->
@@ -115,8 +110,8 @@ function base64url_decode($base64url) {
         <input type="hidden" name="timezone-offset" id="timezone-offset"/>
         <input type="hidden" name="timezone" id="timezone"/>
         <input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>" />
-        <input type="submit"                 id="submit" class="login primary" value="<?php p($l->t('Log in')); ?>" disabled="disabled"/>
-        <input type="submit" name="redirect" id="submit" class="login primary" value="<?php p($l->t('Log in with eID')); ?>" disabled="disabled"/>
+        <input id="submit"                 type="submit" value="<?php p($l2->t('Log in')); ?>" class="login primary" disabled="disabled"/>
+        <input id="submit" name="redirect" type="submit" value="<?php p($l2->t('Log in with eID')); ?>" class="login primary" disabled="disabled"/>
     </fieldset>
 </form>
 <?php if (!empty($_['alt_login'])) { ?>

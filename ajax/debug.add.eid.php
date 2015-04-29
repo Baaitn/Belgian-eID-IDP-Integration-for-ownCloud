@@ -4,7 +4,7 @@ OCP\JSON::checkAppEnabled('beididp');
 OCP\JSON::checkLoggedIn();
 OCP\JSON::callCheck();
 
-$l = OCP\Util::getL10N('beididp'); //$l=OC_L10N::get('beididp'); //$l = \OC::$server->getL10N('settings');
+$l = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 $user= OCP\USER::getUser();
 $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
 for ($index = 0; $index < 1; $index++) {

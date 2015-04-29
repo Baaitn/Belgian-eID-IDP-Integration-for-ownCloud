@@ -11,23 +11,7 @@
 (function ($, OC) {
 
     $(document).ready(function () {
-        alert('document.ready()');
-
-        // <editor-fold defaultstate="collapsed" desc="add a form after the form">
-        //$('form[name=login]').after(
-        //    '<form method="post" name="eid">' + 
-        //        '<fieldset>' + 
-        //            '<img class="" alt="" title="" src="/owncloud/beididp/img/app.svg"/>' + 
-        //            '<p class="grouptop groupbottom">' + 
-        //                '<input name="user" id="user" placeholder="Username" value="" autofocus="" autocomplete="on" autocapitalize="off" autocorrect="off" required="" type="text">' + 
-        //                '<label for="user" class="infield">Username</label>' + 
-        //                '<img class="svg" src="/owncloud/core/img/actions/user.svg" alt="">' + 
-        //            '</p>' + 
-        //            '<input id="submit" type="submit" value="eID" class="login primary"></input>' + 
-        //        '</fieldset>' + 
-        //    '</form>'
-        //);
-        // </editor-fold>
+        //alert('document.ready()');
 
         $('input[name="redirect"]').click(function (){
             $('#user').val('');

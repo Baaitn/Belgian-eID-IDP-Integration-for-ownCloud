@@ -11,18 +11,18 @@
 (function ($, OC) {
 
     $(document).ready(function () {
-        alert('document.ready()');
+        //alert('document.ready()');
 
         $('input[name*=beididp]').change(ChangeEventHandler); //$('input[type=text][name*=beididp]').change(function () { alert('text.change()'); });
         $('select[name*=beididp]').change(ChangeEventHandler); //$('input[type=checkbox][name*=beididp]').change(function () { alert('checkbox.change()'); });
         
         function ChangeEventHandler(event) {
-            alert(event.target.type + '.change()');
+            //alert(event.target.type + '.change()');
             
-            var url = $('#edit-beididp-idp-url').val();
-            var mail = $('#edit-beididp-no-mail-verify').val();
-            var https = $('#edit-beididp-https-required').val();
-            var hash = $('#edit-beididp-hash-claimed-id').val();
+            var url = $('#beididp_idp_url').val();
+            var mail = $('#beididp_no_mail_verify').prop('checked');
+            var https = $('#beididp_https_required').prop('checked');
+            var hash = $('#beididp_hash_claimed_id').prop('checked');
             
             $('#form .msg').html(t('beididp', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
@@ -38,13 +38,13 @@
             );
         }
         
-        //$('#submit').click(function () {
-        //    alert('#submit.click()');
-        //});
+        $('#submit').click(function () {
+            //alert('#submit.click()');
+        });
 
-        //$("#form").submit(function (event) {
-        //    event.preventDefault();
-        //});
+        $("#form").submit(function (event) {
+            //event.preventDefault();
+        });
 
     });
 

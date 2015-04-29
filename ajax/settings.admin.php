@@ -4,7 +4,7 @@ OCP\JSON::checkAppEnabled('beididp');
 OCP\JSON::checkAdminUser();
 OCP\JSON::callCheck();
 
-$l = OCP\Util::getL10N('beididp'); //$l=OC_L10N::get('beididp'); //$l = \OC::$server->getL10N('settings');
+$l = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 $url = $_POST['url'];
 $mail = $_POST['mail'];
 $https = $_POST['https'];
