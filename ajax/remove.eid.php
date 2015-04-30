@@ -7,7 +7,7 @@ OCP\JSON::callCheck();
 $l = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 $user= OCP\USER::getUser();
 $identities = $_POST['identities'];
-OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
+OCP\Config::setUserValue($user, 'beididp', 'identities', json_encode($identities));
 
 if(true){
     //OC_JSON::success(array('data' => array( 'message' => $l->t('Success') )));

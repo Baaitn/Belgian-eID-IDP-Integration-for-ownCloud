@@ -11,7 +11,7 @@ require 'openid.php';
 $openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain */
 if (!$openid->mode) { 
     if (isset($_POST['redirect'])) { /* redirect to the idp after submitting the form */
-        $openid->identity = OCP\Config::getAppValue('beididp', 'beididp_idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint */
+        $openid->identity = OCP\Config::getAppValue('beididp', 'idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint */
         /** use one of these as endpoint for $openid->identity to use eID with or without pincode
          * https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident
          * https://www.e-contract.be/eid-idp/endpoints/openid/auth
@@ -50,7 +50,7 @@ if (!$openid->mode) {
     //echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show attributes */
     $users = OCP\User::getUsers('', null, null); //getUsers($search, $limit, $offset); /* deprecated in 8.1.0, use method search() of \OCP\IUserManager - \OC::$server->getUserManager() instead */
     foreach ($users as $user) {
-        $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
+        $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
         $identity = $openid->__get("identity");
         if (in_array($identity, $identities)) {
             OC::$server->getUserSession()->login($user, $attributes['eid/cert/auth']);  //TODO: provide feedback to user: match found? password correct? ...

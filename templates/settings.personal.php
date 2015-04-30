@@ -17,7 +17,7 @@
     $openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain */
     if (!$openid->mode) { 
         if (isset($_POST['submit'])) { /* redirect to the idp after submitting the form */
-            $openid->identity = OCP\Config::getAppValue('beididp', 'beididp_idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint */
+            $openid->identity = OCP\Config::getAppValue('beididp', 'idp_url', 'https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident'); /* eindpoint */
             /** use one of these as endpoint for $openid->identity to use eID with or without pincode
              * https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident
              * https://www.e-contract.be/eid-idp/endpoints/openid/auth
@@ -55,12 +55,13 @@
         //echo ($openid->__get("identity")); /* debug: show identity */
         //echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show attributes */
         $user = OCP\User::getUser(); /* deprecated in 8.0.0, use \OC::$server->getUserSession()->getUser()->getUID() instead */
-        $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
+        $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
         $identity = $openid->__get("identity");
+        //TODO: add check to see if an identity is already linked to another account
         if (!in_array($identity, $identities)) {
             $identities[] = $identity; //TODO: provide feedback to user: identity added? duplicate identity? ...
         }
-        OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
+        OCP\Config::setUserValue($user, 'beididp', 'identities', json_encode($identities));
         OC_User::setPassword($user, $attributes['eid/cert/auth'], null); //setPassword($uid, $password, $recoveryPassword);
     }
     function base64url_decode($base64url) {
@@ -78,7 +79,7 @@
         </thead>
         <tbody>
             <?php /* get a user's identities and display each one in a table */
-            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'test', array()));
+            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'identities', array()));
             //for ($i = 0; $i < sizeof($identities); $i++) {
             //    print_unescaped('<tr style="overflow:hidden; white-space:nowrap;">');
             //    print_unescaped('<td>' . $identities[$i] . '</td>');
@@ -88,7 +89,7 @@
             foreach ($identities as $identity):?>
                 <tr style="overflow:hidden; white-space:nowrap;">
                     <td><?php p($identity) ?></td>
-                    <td class="remove"><img class="svg action" alt="<?php p($l->t('Delete')); ?>" title="<?php p($l->t('Delete')); ?>" src="<?php print_unescaped(image_path('core', 'actions/delete.svg')); ?>"/></td>
+                    <td class="remove"><img class="svg action" alt="<?php p($l->t('Remove')); ?>" title="<?php p($l->t('Remove')); ?>" src="<?php print_unescaped(image_path('core', 'actions/delete.svg')); ?>"/></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

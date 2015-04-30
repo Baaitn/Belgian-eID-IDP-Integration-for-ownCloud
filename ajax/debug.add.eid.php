@@ -6,14 +6,14 @@ OCP\JSON::callCheck();
 
 $l = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 $user= OCP\USER::getUser();
-$identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'test', array()));
+$identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
 for ($index = 0; $index < 1; $index++) {
     $identity = 'http://xxx.yyy.zzz/eid?' . date("ymd") . 'X' . sprintf("%02d", count($identities)) . 'X'. sprintf("%02d", $index);
     if(!in_array($identity, $identities)){
         $identities[] = $identity;
     }
 }
-OCP\Config::setUserValue($user, 'beididp', 'test', json_encode($identities));
+OCP\Config::setUserValue($user, 'beididp', 'identities', json_encode($identities));
 
 if(true){
     //OC_JSON::success(array('data' => array( 'message' => $l->t('Success') )));

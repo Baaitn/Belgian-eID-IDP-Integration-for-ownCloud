@@ -9,10 +9,10 @@ $url = $_POST['url'];
 $mail = $_POST['mail'];
 $https = $_POST['https'];
 $hash = $_POST['hash'];
-OCP\Config::setAppValue('beididp', 'beididp_idp_url', $url);
-OCP\Config::setAppValue('beididp', 'beididp_no_mail_verify', $mail);
-OCP\Config::setAppValue('beididp', 'beididp_https_required', $https);
-OCP\Config::setAppValue('beididp', 'beididp_hash_claimed_id', $hash);
+OCP\Config::setAppValue('beididp', 'idp_url', $url);
+OCP\Config::setAppValue('beididp', 'no_mail_verify', $mail);
+OCP\Config::setAppValue('beididp', 'https_required', $https);
+OCP\Config::setAppValue('beididp', 'hash_claimed_id', $hash);
 
 if(true){
     //OC_JSON::success(array('data' => array( 'message' => $l->t('Success') )));

@@ -13,6 +13,8 @@
     $(document).ready(function () {
         //alert('document.ready()');
 
+        //TODO: add 'code hinting' to textfield
+
         $('input[name*=beididp]').change(ChangeEventHandler); //$('input[type=text][name*=beididp]').change(function () { alert('text.change()'); });
         $('select[name*=beididp]').change(ChangeEventHandler); //$('input[type=checkbox][name*=beididp]').change(function () { alert('checkbox.change()'); });
         
