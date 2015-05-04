@@ -12,7 +12,7 @@
 
 <div class="section">
     <h2><?php p($l->t('Belgian eID Identities')); ?></h2>
-    <?php
+    <?php /* everything to connect eID identities to an owncloud account */
     require 'openid.php';
     $openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain */
     if (!$openid->mode) { 
@@ -44,7 +44,7 @@
             );
             header('Location: ' . $openid->authUrl());
         }
-    } else { /* get a user's identities and a add the new one if it's not in identities already, then save the identities and change the password to something based on the eID */
+    } else {
         $openid->validate();
         $attributes = $openid->getAttributes();
         //$encodedPhoto = $attributes['eid/photo'];
@@ -54,15 +54,35 @@
         //echo '<br/>';
         //echo ($openid->__get("identity")); /* debug: show identity */
         //echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show attributes */
-        $user = OCP\User::getUser(); /* deprecated in 8.0.0, use \OC::$server->getUserSession()->getUser()->getUID() instead */
-        $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
+        $me = OCP\User::getUser(); /* deprecated in 8.0.0, use \OC::$server->getUserSession()->getUser()->getUID() instead */
         $identity = $openid->__get("identity");
-        //TODO: add check to see if an identity is already linked to another account
-        if (!in_array($identity, $identities)) {
-            $identities[] = $identity; //TODO: provide feedback to user: identity added? duplicate identity? ...
+        /* check to see if the identity has already been linked to an account */
+        $users = OCP\User::getUsers('', null, null);
+        foreach ($users as $user) {
+            $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
+            if (in_array($identity, $identities)) {
+                if ($user === $me){
+                    $status = 'error'; $message = $l->t('%s has already been linked to this account', array($identity)); $skip = true;
+                } else {
+                    $status = 'error'; $message = $l->t('%s has already been linked to %s', array($identity, $user)); $skip = true;
+                }
+            }
         }
-        OCP\Config::setUserValue($user, 'beididp', 'identities', json_encode($identities));
-        OC_User::setPassword($user, $attributes['eid/cert/auth'], null); //setPassword($uid, $password, $recoveryPassword);
+        /* if that was not the case ... */
+        if(!$skip) {
+            $identities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', array()));
+            if (!in_array($identity, $identities)) { 
+                /* add the identity to my identities */
+                $identities[] = $identity;
+                /* try to save my identitites and notify the user, change my passsword where applicable */
+                if (OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode($identities))) {
+                    OC_User::setPassword($user, $attributes['eid/cert/auth'], null); //setPassword($uid, $password, $recoveryPassword);
+                    $status = 'success'; $message = $l->t('eID added');
+                } else {
+                    $status = 'error'; $message = $l->t('Could not add eID');
+                }
+            }
+        }
     }
     function base64url_decode($base64url) {
         $base64 = strtr($base64url, '-_', '+/');
@@ -96,7 +116,7 @@
     </table>
     <br />
     <form id="form" method="post">
-        <input id="submit" name="submit" type="submit" value="<?php p($l->t('Add eID')); ?>"></input>
-        <span class="msg"></span>
+        <input id="submit" name="submit" type="submit" value="<?php p($l->t('Add')); ?>"></input>
+        <span class="msg <?php if ($status == 'success') { print_unescaped('success'); } if ($status == 'error') { print_unescaped('error'); } ?>"><?php p($message); ?></span>
     </form>
 </div>

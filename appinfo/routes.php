@@ -16,7 +16,7 @@
  * This is important, without it ajax calls will fail. 
  * You'll get '302 Found' instead of '200 OK' as status and the returned data will not be what you'd expect it to be. 
  */
-$this->create('beididp_ajax_debug_add_eid', 'ajax/debug.add.eid.php')->actionInclude('beididp/ajax/debug.add.eid.php');
+$this->create('beididp_ajax_add_eid_debug', 'ajax/add.eid.debug.php')->actionInclude('beididp/ajax/add.eid.debug.php');
 $this->create('beididp_ajax_remove_eid', 'ajax/remove.eid.php')->actionInclude('beididp/ajax/remove.eid.php');
 $this->create('beididp_ajax_settings_admin', 'ajax/settings.admin.php')->actionInclude('beididp/ajax/settings.admin.php');
 

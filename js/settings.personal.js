@@ -13,10 +13,10 @@
     $(document).ready(function () {
         //alert('document.ready()');
 
-        $('#identities td.remove > img').click(function () {
+        $('#identities').on('click', 'td.remove > img', function () { //$('#identities td.remove > img').click(function () {
             //alert('row.remove()');
            
-            //remove identity from view, 
+            //remove identity from view
             var row = $(this).parent().parent();
             row.remove();
 
@@ -43,9 +43,10 @@
                 function (result) {
                     if (result.status === 'success') {
                         $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
-                        row.remove();
+                        //row.remove();
                     } else {
                         $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+                        $('#identities tbody').append(row);
                     }
                 }
             );
@@ -75,7 +76,7 @@
             //debug: add identities without redirecting to the idp
             //$('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             //$.post(
-            //    OC.filePath('beididp', 'ajax', 'debug.add.eid.php'),
+            //    OC.filePath('beididp', 'ajax', 'add.eid.debug.php'),
             //    function (result) {
             //        if (result.status === 'success') {
             //            $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
@@ -86,6 +87,14 @@
             //    }
             //);
         });
+
+        if($('#form .msg').hasClass('success')) {
+            $('#form .msg').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900);
+        }
+        
+        if($('#form .msg').hasClass('error')) {
+            $('#form .msg').addClass('error').removeClass('success');
+        }
 
     });
 

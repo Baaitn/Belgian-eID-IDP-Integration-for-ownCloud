@@ -3,7 +3,7 @@
 <?php
 vendor_script('jsTimezoneDetect/jstz');
 script('core', ['visitortimezone', 'lostpassword']);
-$l2 = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
+$l10n = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 ?>
 
 <?php
@@ -53,7 +53,7 @@ if (!$openid->mode) {
         $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
         $identity = $openid->__get("identity");
         if (in_array($identity, $identities)) {
-            OC::$server->getUserSession()->login($user, $attributes['eid/cert/auth']);  //TODO: provide feedback to user: match found? password correct? ...
+            OC::$server->getUserSession()->login($user, $attributes['eid/cert/auth']);  //TODO: provide feedback to user: match found? password incorrect? ...
             header('Location: ' . $_SERVER['REQUEST_URI']);
         }
     }
@@ -90,28 +90,30 @@ function base64url_decode($base64url) {
             <!-- the following div ensures that the spinner is always inside the #message div -->
             <div style="clear: both;"></div>
         </p>
-        <p class="grouptop">
-            <input type="text" name="user" id="user" placeholder="<?php p($l->t('Username')); ?>" value="<?php p($_['username']); ?>" <?php p($_['user_autofocus'] ? 'autofocus' : ''); ?> autocomplete="on" autocapitalize="off" autocorrect="off" /> <!--required-->
-            <label for="user" class="infield"><?php p($l->t('Username')); ?></label>
-            <img class="svg" src="<?php print_unescaped(image_path('', 'actions/user.svg')); ?>" alt=""/>
-        </p>
-        <p class="groupbottom">
-            <input type="password" name="password" id="password" value="" placeholder="<?php p($l->t('Password')); ?>" <?php p($_['user_autofocus'] ? '' : 'autofocus'); ?> autocomplete="on" autocapitalize="off" autocorrect="off" /> <!--required-->
-            <label for="password" class="infield"><?php p($l->t('Password')); ?></label>
-            <img class="svg" id="password-icon" src="<?php print_unescaped(image_path('', 'actions/password.svg')); ?>" alt=""/>
-        </p>
-        <?php if (isset($_['invalidpassword']) && ($_['invalidpassword'])): ?>
-            <a id="lost-password" class="warning" href=""><?php p($l->t('Forgot your password? Reset it!')); ?></a>
+        <?php if (OCP\Config::getAppValue('beididp', 'only_eid', 'false') !== 'true'): ?>
+            <p class="grouptop">
+                <input type="text" name="user" id="user" placeholder="<?php p($l->t('Username')); ?>" value="<?php p($_['username']); ?>" <?php p($_['user_autofocus'] ? 'autofocus' : ''); ?> autocomplete="on" autocapitalize="off" autocorrect="off" /> <!--required-->
+                <label for="user" class="infield"><?php p($l->t('Username')); ?></label>
+                <img class="svg" src="<?php print_unescaped(image_path('', 'actions/user.svg')); ?>" alt=""/>
+            </p>
+            <p class="groupbottom">
+                <input type="password" name="password" id="password" value="" placeholder="<?php p($l->t('Password')); ?>" <?php p($_['user_autofocus'] ? '' : 'autofocus'); ?> autocomplete="on" autocapitalize="off" autocorrect="off" /> <!--required-->
+                <label for="password" class="infield"><?php p($l->t('Password')); ?></label>
+                <img class="svg" id="password-icon" src="<?php print_unescaped(image_path('', 'actions/password.svg')); ?>" alt=""/>
+            </p>
+            <?php if (isset($_['invalidpassword']) && ($_['invalidpassword'])): ?>
+                <a id="lost-password" class="warning" href=""><?php p($l->t('Forgot your password? Reset it!')); ?></a>
+            <?php endif; ?>
+            <?php if ($_['rememberLoginAllowed'] === true) : ?>
+                <input type="checkbox" name="remember_login" value="1" id="remember_login" />
+                <label for="remember_login"><?php p($l->t('remember')); ?></label>
+            <?php endif; ?>
+            <input id="submit" type="submit" value="<?php p($l10n->t('Log in')); ?>" class="login primary" disabled="disabled"/>
         <?php endif; ?>
-        <?php if ($_['rememberLoginAllowed'] === true) : ?>
-            <input type="checkbox" name="remember_login" value="1" id="remember_login" />
-            <label for="remember_login"><?php p($l->t('remember')); ?></label>
-        <?php endif; ?>
+        <input id="submit" name="redirect" type="submit" value="<?php p($l10n->t('Log in using eID')); ?>" class="login primary" disabled="disabled"/>
         <input type="hidden" name="timezone-offset" id="timezone-offset"/>
         <input type="hidden" name="timezone" id="timezone"/>
         <input type="hidden" name="requesttoken" value="<?php p($_['requesttoken']) ?>" />
-        <input id="submit"                 type="submit" value="<?php p($l2->t('Log in')); ?>" class="login primary" disabled="disabled"/>
-        <input id="submit" name="redirect" type="submit" value="<?php p($l2->t('Log in with eID')); ?>" class="login primary" disabled="disabled"/>
     </fieldset>
 </form>
 <?php if (!empty($_['alt_login'])) { ?>
