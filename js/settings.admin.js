@@ -23,15 +23,12 @@
             //alert(event.target.type + '.change()');
             
             var url = $('#beididp_idp_url').val();
-            var mail = $('#beididp_no_mail_verify').prop('checked');
-            var https = $('#beididp_https_required').prop('checked');
-            var hash = $('#beididp_hash_claimed_id').prop('checked');
             var hide = $('#beididp_only_eid').prop('checked');
             
             $('#form .msg').html(t('beididp', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'settings.admin.php'),
-                {url: url, mail: mail, https: https, hash: hash, hide: hide},
+                {url: url, hide: hide},
                 function (result) {
                     if (result.status === 'success') {
                         $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
