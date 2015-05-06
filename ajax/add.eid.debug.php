@@ -16,10 +16,8 @@ foreach ($users as $user) {
     if (in_array($identity, $identities)) {
         if ($user === $me){
             OCP\JSON::error(array('data' => array('message' => $l->t('Identity has already been linked to this account')))); $skip = true;
-            //return;
         } else {
             OCP\JSON::error(array('data' => array('message' => $l->t('Identity has already been linked to %s', array($user))))); $skip = true;
-            //return;
         }
     }
 }
@@ -32,10 +30,8 @@ if(!$skip) {
         /* save my identitites and notify the user */
         if (OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode($identities))) {
             OCP\JSON::success(array('data' => array('message' => $l->t('eID added'))));
-            //return;
         } else {
             OCP\JSON::error(array('data' => array('message' => $l->t('Could not add eID'))));
-            //return;
         }
     }
 }

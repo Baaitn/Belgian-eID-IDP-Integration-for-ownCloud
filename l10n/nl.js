@@ -32,7 +32,7 @@ OC.L10N.register(
         "Save": "Opslaan",
     /* templates/settings.personal.php */
         "Belgian eID Identities": "eID Identiteiten",
-        "Identity": "Identiteit",
+        "Card number": "Kaartnummer",
         "Valid until": "Geldig tot",
         "Operations": "Bewerkingen",
         "Add": "Toevoegen",

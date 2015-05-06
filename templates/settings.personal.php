@@ -12,7 +12,7 @@
 
 <div class="section">
     <h2><?php p($l->t('Belgian eID Identities')); ?></h2>
-    <?php /* everything to connect eID identities to an owncloud account */
+    <?php /* everything to connect an eID to an owncloud account */
     require 'openid.php';
     $openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain */
     if (!$openid->mode) { 
@@ -58,38 +58,6 @@
         $identity->cardnumber = $attributes['eid/card-number'];
         $identity->expiredate = $attributes['eid/card-validity/end'];
         $me = OCP\User::getUser(); /* deprecated in 8.0.0, use OC::$server->getUserSession()->getUser()->getUID() instead */
-        
-        
-//        $object1 = new stdClass();
-//        $object1->nrn = $attributes['eid/rrn'];
-//        $object1->untill = $attributes['eid/card-validity/end'];
-//        $objects[] = json_decode(json_encode($object1), false);
-//        $object2 = new stdClass();
-//        $object2->nrn = $attributes['eid/rrn'];
-//        $object2->untill = $attributes['eid/card-validity/end'];
-//        $objects[] = json_decode(json_encode($object2), false);
-//        $object3 = new stdClass();
-//        $object3->nrn = $attributes['eid/rrn'];
-//        $object3->untill = $attributes['eid/card-validity/end'];
-//        $objects[] = $object3;
-//        
-//        var_dump($objects); //Show created
-//        $encode = json_encode($objects);
-//        var_dump($encode); //setUserValue
-//        
-//        OCP\Config::setUserValue($me, 'beididp', 'test', $encode);
-//        $var = OCP\Config::getUserValue($me, 'beididp', 'test', array());
-//        
-//        var_dump($var); //getUserValue
-//        $decode = json_decode($var, false);
-//        var_dump($decode); //Show returned
-//
-//        var_dump($object1);
-//        var_dump(json_encode($object1));
-//        var_dump(json_decode(json_encode($object1)));
-        
-        
-        
         /* check to see if the identity has already been linked to an account */
         $users = OCP\User::getUsers('', null, null);
         foreach ($users as $user) {
