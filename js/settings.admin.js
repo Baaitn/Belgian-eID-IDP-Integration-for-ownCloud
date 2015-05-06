@@ -13,7 +13,7 @@
     $(document).ready(function () {
         //alert('document.ready()');
 
-        var urls = ["https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident", "https://www.e-contract.be/eid-idp/endpoints/openid/auth", "https://www.e-contract.be/eid-idp/endpoints/openid/ident"];
+        var urls = ["https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident", "https://www.e-contract.be/eid-idp/endpoints/openid/auth"]; //removed "https://www.e-contract.be/eid-idp/endpoints/openid/ident" since it allows to login with eID & without pincode, you can still enter it manualy
         $('#beididp_idp_url').autocomplete({source:urls});
 
         $('input[name*=beididp]').change(ChangeEventHandler); //$('input[type=text][name*=beididp]').change(function () { alert('text.change()'); });

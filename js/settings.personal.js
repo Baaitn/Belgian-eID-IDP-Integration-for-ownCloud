@@ -16,37 +16,21 @@
         $('#identities').on('click', 'td.remove > img', function () { //$('#identities td.remove > img').click(function () {
             //alert('row.remove()');
            
-            //remove identity from view
+            //select cardnumber
             var row = $(this).parent().parent();
-            row.remove();
+            var cardnumber = row.children('td:nth-child(1)').text();
 
-            //debug: select usefull data (only remaining identities, nothing else)
-            //$("#identities").css( "border", "3px solid green" );
-            //$("#identities tbody tr td:nth-child(1)").css( "color", "red" );          
-
-            //store remaining identities in array
-            var identities = [];
-            $('#identities tbody tr td:nth-child(1)').each(function () {
-                identities.push($(this).text());
-            });
-
-            //debug: display content of array
-            //$.each(identities, function(index, value) {
-            //    alert('index: ' + index + ', value: ' + value);
-            //});
-
-            //send identities to be removed from storage
+            //send cardnumber
             $('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'remove.eid.php'),
-                {identities: identities},
+                {cardnumber: cardnumber},
                 function (result) {
                     if (result.status === 'success') {
                         $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
-                        //row.remove();
+                        row.remove();
                     } else {
                         $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
-                        $('#identities tbody').append(row);
                     }
                 }
             );
@@ -55,7 +39,7 @@
             //$.ajax({
             //    type: 'POST',
             //    url: OC.filePath('beididp','ajax','remove.eid.php'),
-            //    data: {identities: identities},
+            //    data: {cardnumber: cardnumber},
             //    success: function (data, textStatus, jqXHR) {
             //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
             //        row.remove();

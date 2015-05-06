@@ -4,12 +4,18 @@ OCP\JSON::checkAppEnabled('beididp');
 OCP\JSON::checkLoggedIn();
 OCP\JSON::callCheck();
 
+$cardnumber = filter_input(INPUT_POST, 'cardnumber');
+
 $l = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
-$me= OCP\User::getUser();
-if(OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode(filter_input(INPUT_POST, 'identities')))){
-    OCP\JSON::success(array('data' => array('message' => $l->t('eID removed'))));
-    return;
+$me = OCP\User::getUser();
+$oldidentities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
+foreach ($oldidentities as $identity) {
+    if($cardnumber !== $identity->cardnumber){
+        $newidentities[] = $identity;
+    }
+}
+if(OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode($newidentities))) {
+    OCP\JSON::success(array('data' => array('message' => $l->t('eID removed'), 'old' => $oldidentities, 'new' => $newidentities)));
 } else {
     OCP\JSON::error(array('data' => array('message' => $l->t('Could not remove eID'))));
-    return;
 }

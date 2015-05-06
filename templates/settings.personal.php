@@ -52,31 +52,65 @@
         //$_SESSION['photo'] = $photo;
         //echo '<img src="photo.php"/>';
         //echo '<br/>';
-        //echo ($openid->__get("identity")); /* debug: show identity */
+        //echo ($openid->__get("identity")); /* debug: show identity url */
         //echo '<pre>' . print_r($openid->getAttributes(), true) . '</pre>'; /* debug: show attributes */
-        $me = OCP\User::getUser(); /* deprecated in 8.0.0, use \OC::$server->getUserSession()->getUser()->getUID() instead */
-        $identity = $openid->__get("identity");
+        $identity = new stdClass(); /* must be the same as in login.php */
+        $identity->cardnumber = $attributes['eid/card-number'];
+        $identity->expiredate = $attributes['eid/card-validity/end'];
+        $me = OCP\User::getUser(); /* deprecated in 8.0.0, use OC::$server->getUserSession()->getUser()->getUID() instead */
+        
+        
+//        $object1 = new stdClass();
+//        $object1->nrn = $attributes['eid/rrn'];
+//        $object1->untill = $attributes['eid/card-validity/end'];
+//        $objects[] = json_decode(json_encode($object1), false);
+//        $object2 = new stdClass();
+//        $object2->nrn = $attributes['eid/rrn'];
+//        $object2->untill = $attributes['eid/card-validity/end'];
+//        $objects[] = json_decode(json_encode($object2), false);
+//        $object3 = new stdClass();
+//        $object3->nrn = $attributes['eid/rrn'];
+//        $object3->untill = $attributes['eid/card-validity/end'];
+//        $objects[] = $object3;
+//        
+//        var_dump($objects); //Show created
+//        $encode = json_encode($objects);
+//        var_dump($encode); //setUserValue
+//        
+//        OCP\Config::setUserValue($me, 'beididp', 'test', $encode);
+//        $var = OCP\Config::getUserValue($me, 'beididp', 'test', array());
+//        
+//        var_dump($var); //getUserValue
+//        $decode = json_decode($var, false);
+//        var_dump($decode); //Show returned
+//
+//        var_dump($object1);
+//        var_dump(json_encode($object1));
+//        var_dump(json_decode(json_encode($object1)));
+        
+        
+        
         /* check to see if the identity has already been linked to an account */
         $users = OCP\User::getUsers('', null, null);
         foreach ($users as $user) {
-            $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', array()));
+            $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
             if (in_array($identity, $identities)) {
                 if ($user === $me){
-                    $status = 'error'; $message = $l->t('%s has already been linked to this account', array($identity)); $skip = true;
+                    $status = 'error'; $message = $l->t('Identity has already been linked to this account'); $skip = true;
                 } else {
-                    $status = 'error'; $message = $l->t('%s has already been linked to %s', array($identity, $user)); $skip = true;
+                    $status = 'error'; $message = $l->t('Identity has already been linked to %s', array($user)); $skip = true;
                 }
             }
         }
         /* if that was not the case ... */
         if(!$skip) {
-            $identities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', array()));
+            $identities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
             if (!in_array($identity, $identities)) { 
                 /* add the identity to my identities */
                 $identities[] = $identity;
-                /* try to save my identitites and notify the user, change my passsword where applicable */
+                /* save my identitites and notify the user, change my passsword where applicable */
                 if (OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode($identities))) {
-                    OC_User::setPassword($user, $attributes['eid/cert/auth'], null); //setPassword($uid, $password, $recoveryPassword);
+                    OC_User::setPassword($me, $attributes['eid/cert/auth'], null); //setPassword($uid, $password, $recoveryPassword);
                     $status = 'success'; $message = $l->t('eID added');
                 } else {
                     $status = 'error'; $message = $l->t('Could not add eID');
@@ -93,13 +127,14 @@
     <table id="identities" class="grid activitysettings">
         <thead>
             <tr>
-                <th><?php p($l->t('BeID Identity')); ?></th>
+                <th><?php p($l->t('Card number')); ?></th>
+                <th><?php p($l->t('Valid until')); ?></th>
                 <th><?php p($l->t('Operations')); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php /* get a user's identities and display each one in a table */
-            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'identities', array()));
+            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'identities', null));
             //for ($i = 0; $i < sizeof($identities); $i++) {
             //    print_unescaped('<tr style="overflow:hidden; white-space:nowrap;">');
             //    print_unescaped('<td>' . $identities[$i] . '</td>');
@@ -108,7 +143,8 @@
             //}
             foreach ($identities as $identity):?>
                 <tr style="overflow:hidden; white-space:nowrap;">
-                    <td><?php p($identity) ?></td>
+                    <td><?php p($identity->cardnumber) ?></td>
+                    <td><?php p($identity->expiredate) ?></td>
                     <td class="remove"><img class="svg action" alt="<?php p($l->t('Remove')); ?>" title="<?php p($l->t('Remove')); ?>" src="<?php print_unescaped(image_path('core', 'actions/delete.svg')); ?>"/></td>
                 </tr>
             <?php endforeach; ?>
