@@ -17,7 +17,7 @@ foreach ($users as $user) {
         if ($user === $me){
             OCP\JSON::error(array('data' => array('message' => $l->t('Identity has already been linked to this account')))); $skip = true;
         } else {
-            OCP\JSON::error(array('data' => array('message' => $l->t('Identity has already been linked to %s', array($user))))); $skip = true;
+            OCP\JSON::error(array('data' => array('message' => $l->t('Identity has already been linked to %1$s', array($user))))); $skip = true;
         }
     }
 }

@@ -15,6 +15,7 @@ foreach ($oldidentities as $identity) {
     }
 }
 if(OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode($newidentities))) {
+    OCP\Util::writeLog('beididp', $me . ' removed an identity.', OCP\Util::INFO);
     OCP\JSON::success(array('data' => array('message' => $l->t('eID removed'))));
 } else {
     OCP\JSON::error(array('data' => array('message' => $l->t('Could not remove eID'))));

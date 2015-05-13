@@ -55,21 +55,21 @@
         });
 
         $("#form").submit(function (event) { 
-            //event.preventDefault();
+            event.preventDefault();
             
             //debug: add identities without redirecting to the idp
-            //$('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
-            //$.post(
-            //    OC.filePath('beididp', 'ajax', 'add.eid.debug.php'),
-            //    function (result) {
-            //        if (result.status === 'success') {
-            //            $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
-            //            location.reload(); //FIXME: add identities to the table without needing to reload the page, note that in production the page will reload due to the redict to and from the idp
-            //        } else {
-            //            $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
-            //        }
-            //    }
-            //);
+            $('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            $.post(
+                OC.filePath('beididp', 'ajax', 'add.eid.debug.php'),
+                function (result) {
+                    if (result.status === 'success') {
+                        $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+                        location.reload(); //FIXME: add identities to the table without needing to reload the page, note that in production the page will reload due to the redict to and from the idp
+                    } else {
+                        $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+                    }
+                }
+            );
         });
 
         if($('#form .msg').hasClass('success')) {
