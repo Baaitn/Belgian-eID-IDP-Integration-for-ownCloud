@@ -62,7 +62,7 @@
         /* check to see if the identity has already been linked to an account */
         $users = OCP\User::getUsers('', null, null);
         foreach ($users as $user) {
-            $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
+            $identities = (array) json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
             if (in_array($identity, $identities)) {
                 if ($user === $me){
                     $status = 'error'; $message = $l->t('Identity has already been linked to this account'); $skip = true;
@@ -73,7 +73,7 @@
         }
         /* if that was not the case ... */
         if(!$skip) {
-            $identities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
+            $identities = (array) json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
             if (!in_array($identity, $identities)) { 
                 /* add the identity to my identities */
                 $identities[] = $identity;
@@ -104,14 +104,14 @@
         </thead>
         <tbody>
             <?php /* get a user's identities and display each one in a table */
-            $identities = json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'identities', null));
+            $identities = (array) json_decode(OCP\Config::getUserValue(OCP\User::getUser(), 'beididp', 'identities', null));
             //for ($i = 0; $i < sizeof($identities); $i++) {
             //    print_unescaped('<tr style="overflow:hidden; white-space:nowrap;">');
             //    print_unescaped('<td>' . $identities[$i] . '</td>');
             //    print_unescaped('<td class="remove"><img class="svg action" alt=' . p($l->t('Delete')) . ' title=' . p($l->t('Delete')) . ' src=' . image_path('core', 'actions/delete.svg') . '/></td>');
             //    print_unescaped('</tr>');
             //}
-            foreach ($identities as $identity):?>
+            foreach ($identities as $identity) : ?>
                 <tr style="overflow:hidden; white-space:nowrap;">
                     <td><?php p($identity->cardnumber) ?></td>
                     <td><?php p($identity->expiredate) ?></td>

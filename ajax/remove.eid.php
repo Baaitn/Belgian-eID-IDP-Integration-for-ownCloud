@@ -8,7 +8,7 @@ $cardnumber = filter_input(INPUT_POST, 'cardnumber');
 
 $l = OCP\Util::getL10N('beididp'); //$l = OC::$server->getL10N('beididp'); //$l=OC_L10N::get('beididp');
 $me = OCP\User::getUser();
-$oldidentities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
+$oldidentities = (array) json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
 foreach ($oldidentities as $identity) {
     if($cardnumber !== $identity->cardnumber){
         $newidentities[] = $identity;

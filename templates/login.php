@@ -54,7 +54,7 @@ if (!$openid->mode) {
     /* get all users and see which identities they have, if a match with the new identity is found, try to log the user in */
     $users = OCP\User::getUsers('', null, null); //getUsers($search, $limit, $offset); /* deprecated in 8.1.0, use method search() of \OCP\IUserManager - \OC::$server->getUserManager() instead */
     foreach ($users as $user) {
-        $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
+        $identities = (array) json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
         if (in_array($identity, $identities)) {
             OC::$server->getUserSession()->login($user, $attributes['eid/cert/auth']); //TODO: provide feedback to user: match found? password incorrect? ...
             header('Location: ' . $_SERVER['REQUEST_URI']);

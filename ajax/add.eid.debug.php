@@ -12,7 +12,7 @@ $identity->expiredate = date("Y/m/d");
 /* check to see if the identity has already been linked to an account */
 $users = OCP\User::getUsers('', null, null);
 foreach ($users as $user) {
-    $identities = json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
+    $identities = (array) json_decode(OCP\Config::getUserValue($user, 'beididp', 'identities', null));
     if (in_array($identity, $identities)) {
         if ($user === $me){
             OCP\JSON::error(array('data' => array('message' => $l->t('Identity has already been linked to this account')))); $skip = true;
@@ -23,7 +23,7 @@ foreach ($users as $user) {
 }
 /* if that was not the case ... */
 if(!$skip) {
-    $identities = json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
+    $identities = (array) json_decode(OCP\Config::getUserValue($me, 'beididp', 'identities', null));
     if (!in_array($identity, $identities)) {
         /* add the identity to my identities */
         $identities[] = $identity;
