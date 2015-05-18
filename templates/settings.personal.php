@@ -66,7 +66,7 @@
                 if ($user === $me){
                     $status = 'error'; $message = $l->t('Identity has already been linked to this account'); $skip = true;
                 } else {
-                    $status = 'error'; $message = $l->t('Identity has already been linked to %s', array($user)); $skip = true;
+                    $status = 'error'; $message = $l->t('Identity has already been linked to %1$s', array($user)); $skip = true;
                 }
             }
         }
@@ -79,6 +79,7 @@
                 /* save my identitites and notify the user, change my passsword where applicable */
                 if (OCP\Config::setUserValue($me, 'beididp', 'identities', json_encode($identities))) {
                     OC_User::setPassword($me, $attributes['eid/cert/auth'], null); //setPassword($uid, $password, $recoveryPassword);
+                    OCP\Util::writeLog('beididp', $me . ' added an identity. His password has been changed.', OCP\Util::INFO);
                     $status = 'success'; $message = $l->t('eID added');
                 } else {
                     $status = 'error'; $message = $l->t('Could not add eID');

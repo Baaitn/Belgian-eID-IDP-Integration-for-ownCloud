@@ -5,7 +5,7 @@ OC.L10N.register(
         "eID added": "eID toegevoegd",
         "Could not add eID": "Kon eID niet toevoegen",
         "Identity has already been linked to this account": "Identiteit is al gekoppeld aan dit account",
-        "Identity has already been linked to %s": "Identiteit is al gekoppeld aan %s",
+        "Identity has already been linked to %1$s": "Identiteit is al gekoppeld aan %1$s",
     /* ajax/remove.eid.php */
         "Removing...": "Verwijderen...",
         "eID removed": "eID verwijderd",
