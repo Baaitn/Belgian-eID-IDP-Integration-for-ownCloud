@@ -13,6 +13,7 @@
 <div class="section">
     <h2><?php p($l->t('Belgian eID Identities')); ?></h2>
     <?php /* everything to connect an eID to an owncloud account */
+    $status = $message = ''; /* init $status & $message, prevents 'Undefined variable: * at /templates/settings.personal.php#126' */
     require 'openid.php';
     $openid = new LightOpenID($_SERVER['SERVER_NAME']); /* domain */
     if (!$openid->mode) { 
