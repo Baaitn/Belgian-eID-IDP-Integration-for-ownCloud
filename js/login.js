@@ -13,7 +13,7 @@
     $(document).ready(function () {
         //alert('document.ready()');
 
-        $('input[name="redirect"]').click(function (){
+        $('input[name=redirect]').click(function (){
             $('#user').val('');
             $('#password').val('');
         });

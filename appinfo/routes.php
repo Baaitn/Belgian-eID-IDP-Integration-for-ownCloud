@@ -12,8 +12,7 @@
 /**
  * Routing for AJAX calls
  * 
- * NOTE: 
- * This is important, without it ajax calls will fail. 
+ * NOTE: This is important, without it ajax calls will fail. 
  * You'll get '302 Found' instead of '200 OK' as status and the returned data will not be what you'd expect it to be. 
  */
 $this->create('beididp_ajax_add_eid_debug', 'ajax/add.eid.debug.php')->actionInclude('beididp/ajax/add.eid.debug.php');

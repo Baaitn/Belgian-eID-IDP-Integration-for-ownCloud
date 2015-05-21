@@ -11,6 +11,7 @@
 (function ($, OC) {
 
     $(document).ready(function () {
+        //alert('document.ready()');
         
         $('#hello').click(function () {
             alert('Hello from your script file');

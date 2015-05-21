@@ -13,7 +13,7 @@
     $(document).ready(function () {
         //alert('document.ready()');
 
-        $('#identities').on('click', 'td.remove > img', function () { //$('#identities td.remove > img').click(function () {
+        $('#beididp #identities').on('click', 'td.remove > img', function () { //$('#identities td.remove > img').click(function () {
             //alert('row.remove()');
            
             //select cardnumber
@@ -21,63 +21,63 @@
             var cardnumber = row.children('td:nth-child(1)').text();
 
             //send cardnumber
-            $('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            $('#beididp .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#beididp .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'remove.eid.php'),
                 {cardnumber: cardnumber},
                 function (result) {
                     if (result.status === 'success') {
-                        $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+                        $('#beididp .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#beididp .msg', result);
                         row.remove();
                     } else {
-                        $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+                        $('#beididp .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#beididp .msg', result);
                     }
                 }
             );
     
-            //$('#form .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            //$('#beididp .msg').html(t('beididp', 'Removing...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#beididp .msg');
             //$.ajax({
             //    type: 'POST',
             //    url: OC.filePath('beididp','ajax','remove.eid.php'),
             //    data: {cardnumber: cardnumber},
             //    success: function (data, textStatus, jqXHR) {
-            //        $('#form .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+            //        $('#beididp .msg').html('success').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#beididp .msg', result);
             //        row.remove();
             //    },
             //    error: function (jqXHR, textStatus, errorThrown) {
-            //        $('#form .msg').html('error').addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+            //        $('#beididp .msg').html('error').addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#beididp .msg', result);
             //    }
             //});
         });
 
-        $('#submit').click(function () {
+        $('#beididp #submit').click(function () {
             //alert('#submit.click()');
         });
 
-        $("#form").submit(function (event) { 
+        $("#beididp #form").submit(function (event) { 
             //event.preventDefault();
             
             //debug: add identities without redirecting to the idp
-            //$('#form .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            //$('#beididp .msg').html(t('beididp', 'Adding...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#beididp .msg');
             //$.post(
             //    OC.filePath('beididp', 'ajax', 'add.eid.debug.php'),
             //    function (result) {
             //        if (result.status === 'success') {
-            //            $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+            //            $('#beididp .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#beididp .msg', result);
             //            location.reload(); //FIXME: add identities to the table without needing to reload the page, note that in production the page will reload due to the redict to and from the idp
             //        } else {
-            //            $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+            //            $('#beididp .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#beididp .msg', result);
             //        }
             //    }
             //);
         });
 
-        if($('#form .msg').hasClass('success')) {
-            $('#form .msg').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900);
+        if($('#beididp .msg').hasClass('success')) {
+            $('#beididp .msg').addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900);
         }
         
-        if($('#form .msg').hasClass('error')) {
-            $('#form .msg').addClass('error').removeClass('success');
+        if($('#beididp .msg').hasClass('error')) {
+            $('#beididp .msg').addClass('error').removeClass('success');
         }
 
     });

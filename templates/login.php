@@ -93,7 +93,7 @@ function base64url_decode($base64url) {
             <!-- the following div ensures that the spinner is always inside the #message div -->
             <div style="clear: both;"></div>
         </p>
-        <?php if (OCP\Config::getAppValue('beididp', 'only_eid', 'false') !== 'true'): ?>
+        <?php if (OCP\Config::getAppValue('beididp', 'hide', 'false') === 'false'): ?>
             <p class="grouptop">
                 <input type="text" name="user" id="user" placeholder="<?php p($l->t('Username')); ?>" value="<?php p($_['username']); ?>" <?php p($_['user_autofocus'] ? 'autofocus' : ''); ?> autocomplete="on" autocapitalize="off" autocorrect="off" /> <!--required-->
                 <label for="user" class="infield"><?php p($l->t('Username')); ?></label>
@@ -107,7 +107,7 @@ function base64url_decode($base64url) {
             <?php if (isset($_['invalidpassword']) && ($_['invalidpassword'])): ?>
                 <a id="lost-password" class="warning" href=""><?php p($l->t('Forgot your password? Reset it!')); ?></a>
             <?php endif; ?>
-            <?php if ($_['rememberLoginAllowed'] === true) : ?>
+            <?php if ($_['rememberLoginAllowed'] === true): ?>
                 <input type="checkbox" name="remember_login" value="1" id="remember_login" />
                 <label for="remember_login"><?php p($l->t('remember')); ?></label>
             <?php endif; ?>

@@ -10,7 +10,7 @@
  */
 ?>
 
-<div class="section">
+<div id="beididp" class="section">
     <h2><?php p($l->t('Belgian eID Identities')); ?></h2>
     <?php /* everything to connect an eID to an owncloud account */
     $status = $message = ''; /* init $status & $message, prevents 'Undefined variable: * at /templates/settings.personal.php#126' */
@@ -94,7 +94,7 @@
         return ($plainText);
     }
     ?>
-    <table id="identities" class="grid activitysettings">
+    <table id="identities" class="grid">
         <thead>
             <tr>
                 <th><?php p($l->t('Card number')); ?></th>
@@ -123,6 +123,6 @@
     <br />
     <form id="form" method="post">
         <input id="submit" name="submit" type="submit" value="<?php p($l->t('Add')); ?>"></input>
-        <span class="msg <?php if ($status == 'success') { print_unescaped('success'); } if ($status == 'error') { print_unescaped('error'); } ?>"><?php p($message); ?></span>
     </form>
+    <span class="msg <?php if ($status == 'success') { print_unescaped('success'); } if ($status == 'error') { print_unescaped('error'); } ?>"><?php p($message); ?></span>
 </div>

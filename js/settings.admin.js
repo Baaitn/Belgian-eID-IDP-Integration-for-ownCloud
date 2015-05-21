@@ -13,39 +13,35 @@
     $(document).ready(function () {
         //alert('document.ready()');
 
-        var urls = ["https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident", "https://www.e-contract.be/eid-idp/endpoints/openid/auth"]; //removed "https://www.e-contract.be/eid-idp/endpoints/openid/ident" since it allows to login with eID & without pincode, you can still enter it manualy
-        $('#beididp_idp_url').autocomplete({source:urls});
+        $('#beididp_url').autocomplete({
+            source:[
+                "https://www.e-contract.be/eid-idp/endpoints/openid/auth",
+            //  "https://www.e-contract.be/eid-idp/endpoints/openid/ident", /* removed since it allows to login without pincode */
+                "https://www.e-contract.be/eid-idp/endpoints/openid/auth-ident"
+            ]
+        });
 
-        $('input[name*=beididp]').change(ChangeEventHandler); //$('input[type=text][name*=beididp]').change(function () { alert('text.change()'); });
-        $('select[name*=beididp]').change(ChangeEventHandler); //$('input[type=checkbox][name*=beididp]').change(function () { alert('checkbox.change()'); });
+        $('input[name*=beididp]').change(ChangeEventHandler); //[name*=beididp][type=text] //[name*=beididp][type=checkbox]
         
         function ChangeEventHandler(event) {
             //alert(event.target.type + '.change()');
             
-            var url = $('#beididp_idp_url').val();
-            var hide = $('#beididp_only_eid').prop('checked');
+            var url = $('#beididp_url').val();
+            var hide = $('#beididp_hide').prop('checked');
             
-            $('#form .msg').html(t('beididp', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#form .msg');
+            $('#beididp .msg').html(t('beididp', 'Saving...')).removeClass('success').removeClass('error').stop(true, true).show(); //OC.msg.startSaving('#beididp .msg');
             $.post(
                 OC.filePath('beididp', 'ajax', 'settings.admin.php'),
                 {url: url, hide: hide},
                 function (result) {
                     if (result.status === 'success') {
-                        $('#form .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#form .msg', result);
+                        $('#beididp .msg').html(result.data.message).addClass('success').removeClass('error').stop(true, true).delay(3000).fadeOut(900).show(); //OC.msg.finishedSaving('#beididp .msg', result);
                     } else {
-                        $('#form .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#form .msg', result);
+                        $('#beididp .msg').html(result.data.message).addClass('error').removeClass('success').show(); //OC.msg.finishedSaving('#beididp .msg', result);
                     }
                 }
             );
         }
-        
-        $('#submit').click(function () {
-            //alert('#submit.click()');
-        });
-
-        $("#form").submit(function (event) {
-            //event.preventDefault();
-        });
 
     });
 

@@ -1,0 +1,22 @@
+#beididp #identities {
+    max-width: 550px;
+    white-space: normal;
+}
+
+#beididp #identities th.small {
+    width: 5em;
+}
+
+#beididp #identities th.small, #beididp #identities td.small {
+    text-align: center;
+}
+
+#beididp #identities td.small label {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#beididp #identities tbody tr {
+    height: 2.5em;
+}
