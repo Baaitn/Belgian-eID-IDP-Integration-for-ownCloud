@@ -21,7 +21,7 @@
             ]
         });
 
-        $('input[name*=beididp]').change(ChangeEventHandler); //[name*=beididp][type=text] //[name*=beididp][type=checkbox]
+        $('#beididp input[name*=beididp]').change(ChangeEventHandler); //[name*=beididp][type=text] //[name*=beididp][type=checkbox]
         
         function ChangeEventHandler(event) {
             //alert(event.target.type + '.change()');

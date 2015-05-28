@@ -1,6 +1,6 @@
 <?php
 /*  */
-OCP\JSON::checkAppEnabled('beididp');
+OCP\App::checkAppEnabled('beididp');
 OCP\User::checkLoggedIn();
 script('beididp', 'settings.personal');
 style('beididp', 'settings.personal');

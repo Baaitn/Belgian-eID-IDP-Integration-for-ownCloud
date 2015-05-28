@@ -1,6 +1,6 @@
 <?php
 /*  */
-OCP\JSON::checkAppEnabled('beididp');
+OCP\App::checkAppEnabled('beididp');
 OCP\User::checkAdminUser();
 script('beididp', 'settings.admin');
 style('beididp', 'settings.admin');
